@@ -40,4 +40,27 @@ public class OkHttpTest {
             logger.error("get execute has an error.", e);
         }
     }
+
+    @DisplayName("OkHttp的代理动态选择的测试")
+    @Test
+    public void testOkHttpProxySelector() throws Exception {
+        // 配置GET请求
+        Request request = new Request.Builder()
+                .url("https://www.baidu.com/")
+                //设置代理
+                .header("meta.proxy", "http:127.0.0.1:7890")
+                .get()
+                .build();
+
+        // 发起同步请求
+        try (Response response = HttpClientConfig.client().newCall(request).execute()) {
+            // 打印返回结果
+            logger.info("get response code is {}", response.code());
+            logger.info("get response message is {}", response.message());
+            logger.info("get response headers is \n{}", response.headers());
+            logger.info("get response body is {}", response.body().string());
+        } catch (Exception e) {
+            logger.error("get execute has an error.", e);
+        }
+    }
 }

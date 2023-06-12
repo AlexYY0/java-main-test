@@ -71,8 +71,11 @@ public class HttpClientConfig {
                 .hostnameVerifier((hostname, session) -> true)
                 // 设置https配置，此处忽略了所有证书
                 .sslSocketFactory(createEasySSLContext().getSocketFactory(), new EasyX509TrustManager(null))
-                // 设置代理
+                // 设置代理（固定）
                 //.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888)))
+                //设置代理的动态选择
+                .addInterceptor(new SwitchProxyInterceptor())
+                .proxySelector(new SwitchProxySelector())
                 //拦截器
                 //.addInterceptor()
                 .build();
