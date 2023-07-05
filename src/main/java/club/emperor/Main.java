@@ -1,5 +1,8 @@
 package club.emperor;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -57,5 +60,17 @@ public class Main {
         System.out.println("gsonJsonObjectNew.get(\"numBigDecimalStr\").getAsBigDecimal()" + gsonJsonObjectNew.get("numBigDecimalStr").getAsBigDecimal());
         System.out.println("gsonJsonObjectNew.get(\"numBigDecimalStr\").getAsBigDecimal().toPlainString()" + gsonJsonObjectNew.get("numBigDecimalStr").getAsBigDecimal().toPlainString());
         System.out.println("new BigDecimal(gsonJsonObjectNew.get(\"numBigDecimalStr\").getAsString()).toPlainString()" + new BigDecimal(gsonJsonObjectNew.get("numBigDecimalStr").getAsString()).toPlainString());
+        System.out.println("----------------------------------------------------------------");
+
+        //jackson
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonStr);
+            System.out.println("rootNode.get(\"numBigDecimal\").asDouble()" + rootNode.get("numBigDecimal").asDouble());
+            System.out.println("rootNode.get(\"numBigDecimal\").asText()" + rootNode.get("numBigDecimal").asText());
+            System.out.println("new BigDecimal(rootNode.get(\"numBigDecimal\").asText()).toPlainString()" + new BigDecimal(rootNode.get("numBigDecimal").asText()).toPlainString());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
