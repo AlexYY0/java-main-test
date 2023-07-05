@@ -1,6 +1,6 @@
 package club.emperor.http;
 
-import club.emperor.config.HttpClientConfig;
+import club.emperor.http.config.HttpClientConfig;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.jupiter.api.DisplayName;

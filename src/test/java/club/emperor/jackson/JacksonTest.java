@@ -1,5 +1,6 @@
 package club.emperor.jackson;
 
+import club.emperor.jackson.entity.ObjectJson;
 import club.emperor.jackson.entity.ObjectJsonAll;
 import club.emperor.jackson.entity.ObjectJsonNoNull;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -29,6 +30,19 @@ public class JacksonTest {
             ObjectMapper objectMapper = new ObjectMapper();
             ObjectJsonAll objectJsonAll = new ObjectJsonAll();
             String jsonString = objectMapper.writeValueAsString(objectJsonAll);
+            System.out.println(jsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DisplayName("普通对象序列化测试")
+    @Test
+    public void jacksonEntityTest() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectJson objectJson = new ObjectJson();
+            String jsonString = objectMapper.writeValueAsString(objectJson);
             System.out.println(jsonString);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

@@ -38,7 +38,7 @@ public class SwitchProxySelector extends ProxySelector {
         if (proxy == null) {
             proxy = Proxy.NO_PROXY;
         }
-        logger.debug("{} use proxy {}:{}", uri.toString(), proxy.type().name(), proxy.address());
+        logger.info("{} use proxy {}:{}", uri.toString(), proxy.type().name(), proxy.address());
         SwitchProxySelector.proxyThreadLocal.remove();
         return Collections.singletonList(proxy);
     }

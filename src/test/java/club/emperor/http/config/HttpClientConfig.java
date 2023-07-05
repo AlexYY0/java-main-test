@@ -1,6 +1,5 @@
 package club.emperor.http.config;
 
-import club.emperor.config.EasyX509TrustManager;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
