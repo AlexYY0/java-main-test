@@ -1,6 +1,7 @@
 package club.emperor.json.parse;
 
 import club.emperor.json.gsonconfig.NullToEmptyStringDeserializer;
+import club.emperor.json.gsonconfig.StringNullAdapter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,6 +95,7 @@ public class JsonParseTest {
     @Test
     public void gsonParseNullTest() {
         Gson gson = new GsonBuilder()
+                .registerTypeAdapter(String.class, new StringNullAdapter())
                 .registerTypeAdapter(JsonElement.class, new NullToEmptyStringDeserializer())
                 .create();
         JsonObject gsonJsonObjectNew = gson.fromJson(jsonStr, JsonElement.class).getAsJsonObject();
