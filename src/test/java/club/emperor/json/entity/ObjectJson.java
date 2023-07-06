@@ -1,4 +1,4 @@
-package club.emperor.jackson.entity;
+package club.emperor.json.entity;
 
 import java.math.BigDecimal;
 

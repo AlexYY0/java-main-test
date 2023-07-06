@@ -1,6 +1,6 @@
-package club.emperor.jackson.entity;
+package club.emperor.json.entity;
 
-import club.emperor.jackson.serializer.CustomNullSerializer;
+import club.emperor.json.jacksonserializer.CustomNullSerializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

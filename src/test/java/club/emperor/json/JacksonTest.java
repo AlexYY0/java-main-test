@@ -1,8 +1,8 @@
-package club.emperor.jackson;
+package club.emperor.json;
 
-import club.emperor.jackson.entity.ObjectJson;
-import club.emperor.jackson.entity.ObjectJsonAll;
-import club.emperor.jackson.entity.ObjectJsonNoNull;
+import club.emperor.json.entity.ObjectJson;
+import club.emperor.json.entity.ObjectJsonAll;
+import club.emperor.json.entity.ObjectJsonNoNull;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
