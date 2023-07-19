@@ -15,6 +15,13 @@
     </properties>
 
     <dependencies>
+        <!-- User-Agent解析工具 https://mvnrepository.com/artifact/net.sf.uadetector/uadetector-resources -->
+        <dependency>
+            <groupId>net.sf.uadetector</groupId>
+            <artifactId>uadetector-resources</artifactId>
+            <version>2014.10</version>
+        </dependency>
+
         <!-- 网络请求框架：https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
         <!--<dependency>
             <groupId>com.squareup.retrofit2</groupId>
