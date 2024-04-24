@@ -25,6 +25,8 @@ public class SocketThread extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(SocketThread.class);
 
+    private long beginTime;
+
     private static String mockResult;
 
     static {
@@ -38,31 +40,44 @@ public class SocketThread extends Thread {
     private Socket socket;
 
     public SocketThread(Socket socket) throws SocketException {
+        beginTime = System.currentTimeMillis();
         this.socket = socket;
-        this.socket.setSoTimeout(25000);
+        socket.setSoTimeout(25000);
+        // socket.setKeepAlive(true);
+        socket.setReuseAddress(true);
     }
 
     @Override
     public void run() {
+        long beginTime0 = System.currentTimeMillis();
+        long cost0 = beginTime0 - beginTime, cost1 = 0, cost2 = 0, cost3 = 0;
         try (
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "GBK"))
         ) {
-            String info = null;
+            cost1 = System.currentTimeMillis() - beginTime0;
+            // logger.info("socket is KeepAlive? {}", socket.getKeepAlive());
 
-            while (!((info = br.readLine()).equals("bye"))) {
+            long beginTime1 = System.currentTimeMillis();
+            String info = null;
+            while (!("bye".equals(info = br.readLine()))) {
                 // logger.info("我是服务器，客户端说：{}", info);
             }
             // logger.info("我是服务器，客户端说：{}", info = br.readLine());
             // socket.shutdownInput();
+            cost2 = System.currentTimeMillis() - beginTime1;
 
             // String resultStr = OBJECT_MAPPER.writeValueAsString(createMockResult()) + "\r\n";
+
+            long beginTime2 = System.currentTimeMillis();
             bw.write(mockResult);
             bw.flush();
+            cost3 = System.currentTimeMillis() - beginTime2;
             // logger.info("请求返回结束！");
         } catch (Exception e) {
             logger.error("SocketThread Run has an error!", e);
         } finally {
+            long beginTime3 = System.currentTimeMillis();
             // 关闭资源
             try {
                 if (socket != null) {
@@ -70,6 +85,11 @@ public class SocketThread extends Thread {
                 }
             } catch (IOException e) {
                 logger.error("SocketThread Run close socket has an error!", e);
+            }
+            long endTime = System.currentTimeMillis();
+            long cost = endTime - beginTime;
+            if (cost > 20) {
+                logger.info("Cost: {}, Cost Wait: {}, Cost Stream: {}, Cost Read: {}, Cost Write: {}, Cost Close: {}", cost, cost0, cost1, cost2, cost3, endTime - beginTime3);
             }
         }
     }

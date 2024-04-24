@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -23,14 +23,16 @@ public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    private static ThreadPoolExecutor socketWorkThreadPool = new ThreadPoolExecutor(
+    public static ThreadPoolExecutor socketWorkThreadPool = new ThreadPoolExecutor(
             24, 24, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1024),
             new ThreadPoolExecutor.AbortPolicy());
 
     public static void main(String[] args) {
         try {
             // 创建服务端socket
-            ServerSocket serverSocket = new ServerSocket(3005);
+            ServerSocket serverSocket = new ServerSocket();
+            serverSocket.setReuseAddress(true);
+            serverSocket.bind(new InetSocketAddress(3005));
 
             // 创建客户端socket
             Socket socket = null;
@@ -40,13 +42,12 @@ public class Main {
                 try {
                     // 监听客户端
                     socket = serverSocket.accept();
-                    socket.setSoTimeout(25000);
 
                     SocketThread thread = new SocketThread(socket);
                     socketWorkThreadPool.execute(thread);
 
                     // InetAddress address = socket.getInetAddress();
-                    // logger.info("当前客户端的IP：{}, HostName: {}", address.getHostAddress(), address.getHostName());
+                    // logger.info("当前客户端的IP：{}，Port：{}, HostName: {}", address.getHostAddress(), socket.getPort(), address.getHostName());
                 } catch (IOException e) {
                     logger.error("ServerSocket accept has an error!", e);
                 }
